@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Validation Unit Tests</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { color: #333; border-bottom: 3px solid #00b4db; padding-bottom: 10px; }
+    .test-case { margin: 20px 0; padding: 15px; background: #f9f9f9; border-left: 4px solid #ddd; border-radius: 5px; }
+    .test-case.passed { border-left-color: #4caf50; background: #e8f5e9; }
+    .test-case.failed { border-left-color: #f44336; background: #ffebee; }
+    .test-name { font-weight: bold; margin-bottom: 8px; font-size: 1.1em; }
+    .test-input { color: #666; margin: 5px 0; font-family: monospace; }
+    .test-result { margin-top: 8px; font-weight: bold; }
+    .passed .test-result { color: #4caf50; }
+    .failed .test-result { color: #f44336; }
+    .summary { margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 5px; font-size: 1.2em; }
+    .summary .total { font-weight: bold; color: #1976d2; }
+    .summary .passed-count { color: #4caf50; }
+    .summary .failed-count { color: #f44336; }
+    button { background: #00b4db; color: white; padding: 12px 24px; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; margin-top: 20px; }
+    button:hover { background: #0083b0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Email Validation Unit Tests</h1>
+    <p>Testing the validateEmail() function from index.html portfolio</p>
+    <button onclick="runTests()">Run All Tests</button>
+    <div id="test-results"></div>
+    <div id="summary"></div>
+  </div>
+
+  <script>
+    // Email validation function (same as in index.html)
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Test cases
+    const testCases = [
+      // Valid emails
+      { input: 'kasurirohith@example.com', expected: true, description: 'Valid email with standard format' },
+      { input: 'user.name@domain.com', expected: true, description: 'Valid email with dot in username' },
+      { input: 'user+tag@example.co.uk', expected: true, description: 'Valid email with plus sign and multiple domain parts' },
+      { input: 'test123@test-domain.org', expected: true, description: 'Valid email with numbers and hyphen' },
+      { input: 'a@b.c', expected: true, description: 'Shortest valid email format' },
+      
+      // Invalid emails
+      { input: '', expected: false, description: 'Empty string' },
+      { input: 'notanemail', expected: false, description: 'Missing @ symbol' },
+      { input: '@example.com', expected: false, description: 'Missing username' },
+      { input: 'user@', expected: false, description: 'Missing domain' },
+      { input: 'user@domain', expected: false, description: 'Missing top-level domain' },
+      { input: 'user @example.com', expected: false, description: 'Space in username' },
+      { input: 'user@exam ple.com', expected: false, description: 'Space in domain' },
+      { input: 'user@@example.com', expected: false, description: 'Double @ symbol' },
+      { input: 'user@.com', expected: false, description: 'Domain starts with dot' },
+      { input: 'user@example..com', expected: false, description: 'Double dot in domain' }
+    ];
+
+    function runTests() {
+      const resultsDiv = document.getElementById('test-results');
+      const summaryDiv = document.getElementById('summary');
+      resultsDiv.innerHTML = '';
+      
+      let passed = 0;
+      let failed = 0;
+
+      testCases.forEach((testCase, index) => {
+        const result = validateEmail(testCase.input);
+        const testPassed = result === testCase.expected;
+        
+        if (testPassed) {
+          passed++;
+        } else {
+          failed++;
+        }
+
+        const testDiv = document.createElement('div');
+        testDiv.className = `test-case ${testPassed ? 'passed' : 'failed'}`;
+        testDiv.innerHTML = `
+          <div class="test-name">Test ${index + 1}: ${testCase.description}</div>
+          <div class="test-input">Input: "${testCase.input}"</div>
+          <div class="test-input">Expected: ${testCase.expected}</div>
+          <div class="test-input">Result: ${result}</div>
+          <div class="test-result">${testPassed ? '✓ PASSED' : '✗ FAILED'}</div>
+        `;
+        resultsDiv.appendChild(testDiv);
+      });
+
+      // Display summary
+      const total = testCases.length;
+      const passRate = ((passed / total) * 100).toFixed(1);
+      summaryDiv.innerHTML = `
+        <div class="summary">
+          <div><span class="total">Total Tests:</span> ${total}</div>
+          <div><span class="passed-count">Passed:</span> ${passed}</div>
+          <div><span class="failed-count">Failed:</span> ${failed}</div>
+          <div><span class="total">Pass Rate:</span> ${passRate}%</div>
+        </div>
+      `;
+    }
+
+    // Auto-run tests on page load
+    window.onload = runTests;
+  </script>
+</body>
+</html>

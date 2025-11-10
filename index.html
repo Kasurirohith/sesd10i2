@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasuri Rohith | Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    body { background: #081b29; color: #fff; line-height: 1.6; }
+    header { text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #00b4db, #0083b0); border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+    h1 { font-size: 4rem; font-weight: 700; letter-spacing: 2px; }
+    .tagline { font-size: 1.5rem; color: #e0e0e0; margin-top: 10px; }
+    section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+    h2 { color: #00b4db; font-size: 2.5rem; margin-bottom: 20px; border-left: 6px solid #00b4db; padding-left: 15px; text-transform: uppercase; }
+    p { font-size: 1.3rem; color: #d0d0d0; margin-bottom: 15px; }
+    ul { list-style: none; margin-top: 15px; }
+    ul li { background: #0a2a3f; padding: 15px 20px; margin: 10px 0; border-radius: 15px; font-size: 1.2rem; transition: 0.3s; }
+    ul li:hover { background: #00b4db; color: #081b29; transform: scale(1.05); }
+    .contact-form { margin-top: 30px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-size: 1.2rem; color: #00b4db; }
+    input[type="email"], input[type="text"], textarea { width: 100%; padding: 12px 15px; background: #0a2a3f; border: 2px solid #00b4db; border-radius: 10px; color: #fff; font-size: 1.1rem; transition: 0.3s; }
+    input[type="email"]:focus, input[type="text"]:focus, textarea:focus { outline: none; border-color: #00d4ff; box-shadow: 0 0 10px rgba(0, 180, 219, 0.5); }
+    .error-message { color: #ff4444; font-size: 0.9rem; margin-top: 5px; display: none; }
+    .success-message { color: #44ff44; font-size: 0.9rem; margin-top: 5px; display: none; }
+    button { background: #00b4db; color: #081b29; padding: 12px 30px; border: none; border-radius: 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #00d4ff; transform: scale(1.05); }
+    .contact a { display: inline-block; margin-top: 15px; color: #00b4db; font-size: 1.2rem; text-decoration: none; border: 2px solid #00b4db; padding: 10px 20px; border-radius: 30px; transition: 0.3s; }
+    .contact a:hover { background: #00b4db; color: #081b29; transform: scale(1.1); }
+    footer { text-align: center; padding: 30px; background: #0a2a3f; font-size: 1rem; margin-top: 60px; border-top: 2px solid #00b4db; letter-spacing: 1px; }
+    @media (max-width: 768px) { h1 { font-size: 3rem; } h2 { font-size: 2rem; } p, ul li { font-size: 1.1rem; } .contact a { font-size: 1rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kasuri Rohith</h1>
+    <p class="tagline">Student | Passionate Learner | Tech Enthusiast</p>
+  </header>
+  <section class="about">
+    <h2>About Me</h2>
+    <p>Hello! I'm <strong>Kasuri Rohith</strong>, a dedicated student exploring the world of technology and software development.</p>
+  </section>
+  <section class="certificates">
+    <h2>Certificates</h2>
+    <ul><li>AWS Certified</li><li>Microsoft Certified</li></ul>
+  </section>
+  <section class="courses">
+    <h2>Courses</h2>
+    <ul><li>SESD (Software Engineering and System Design)</li><li>MICR (Microprocessors and Microcontrollers)</li></ul>
+  </section>
+  <section class="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:kasurirohith@example.com">kasurirohith@example.com</a></p>
+    <div class="contact-form">
+      <h3 style="color: #00b4db; margin-bottom: 20px;">Send me a message</h3>
+      <form id="contactForm">
+        <div class="form-group"><label for="name">Name:</label><input type="text" id="name" required></div>
+        <div class="form-group"><label for="email">Your Email:</label><input type="email" id="email" required><span class="error-message" id="email-error">Please enter a valid email</span><span class="success-message" id="email-success">Email is valid!</span></div>
+        <div class="form-group"><label for="message">Message:</label><textarea id="message" rows="5" required></textarea></div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+  <footer><p>&copy; 2025 Kasuri Rohith. All Rights Reserved.</p></footer>
+  <script>
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+    const emailInput = document.getElementById('email'), emailError = document.getElementById('email-error'), emailSuccess = document.getElementById('email-success');
+    emailInput.addEventListener('input', function() {
+      if (this.value.length === 0) { emailError.style.display = 'none'; emailSuccess.style.display = 'none'; return; }
+      if (validateEmail(this.value)) { emailError.style.display = 'none'; emailSuccess.style.display = 'block'; this.style.borderColor = '#44ff44'; }
+      else { emailError.style.display = 'block'; emailSuccess.style.display = 'none'; this.style.borderColor = '#ff4444'; }
+    });
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!validateEmail(emailInput.value)) { alert('Please enter a valid email address'); return; }
+      alert('Thank you! Your message has been received.');
+      this.reset(); emailError.style.display = 'none'; emailSuccess.style.display = 'none'; emailInput.style.borderColor = '#00b4db';
+    });
+    if (typeof module !== 'undefined' && module.exports) { module.exports = { validateEmail }; }
+  </script>
+</body>
+</html>

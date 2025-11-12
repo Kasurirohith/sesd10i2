@@ -141,24 +141,62 @@
   <section class="certificates">
     <h2>Certificates</h2>
     <ul>
-      <li>Coursera Certificate</li>
+      <li>Microsoft Certified</li>
       <li>AWS Certified</li>
-      <li>Google Certification</li>
     </ul>
   </section>
 
   <section class="courses">
     <h2>Courses</h2>
-    <p>SCSD (Software Component and System Development)</p>
+        <ul>
+            <li>SESD (Software Engineering and System Design)</li>
+            <li>MICR (Microprocessors and Microcontrollers)</li>
+        </ul>
   </section>
 
   <section class="contact">
     <h2>Contact</h2>
     <p>Email: <a href="mailto:kasurirohith@example.com">kasurirohith@example.com</a></p>
+            <div class="contact-form">
+            <h3 style="color: #00b4db; margin-bottom: 20px;">Send me a message</h3>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" required>
+                    <span class="error-message" id="email-error">Please enter a valid email</span>
+                    <span class="success-message" id="email-success">Email is valid!</span>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="5" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
   </section>
 
   <footer>
     <p>© 2025 Kasuri Rohith. All Rights Reserved.</p>
   </footer>
+      <script>
+        function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+        const emailInput = document.getElementById('email'), emailError = document.getElementById('email-error'), emailSuccess = document.getElementById('email-success');
+        emailInput.addEventListener('input', function() {
+            if (this.value.length === 0) { emailError.style.display = 'none'; emailSuccess.style.display = 'none'; return; }
+            if (validateEmail(this.value)) { emailError.style.display = 'none'; emailSuccess.style.display = 'block'; this.style.borderColor = '#44ff44'; }
+            else { emailError.style.display = 'block'; emailSuccess.style.display = 'none'; this.style.borderColor = '#ff4444'; }
+        });
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateEmail(emailInput.value)) { alert('Please enter a valid email address'); return; }
+            alert('Thank you! Your message has been received.');
+            this.reset(); emailError.style.display = 'none'; emailSuccess.style.display = 'none'; emailInput.style.borderColor = '#00b4db';
+        });
+        if (typeof module !== 'undefined' && module.exports) { module.exports = {validateEmail}; }
+    </script>
 </body>
 </html>
